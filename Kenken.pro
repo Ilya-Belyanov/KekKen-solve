@@ -10,11 +10,19 @@ CONFIG += c++11
 
 SOURCES += \
     board.cpp \
+    borderrule.cpp \
+    cell.cpp \
+    griditem.cpp \
+    kenkenparser.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     board.h \
+    borderrule.h \
+    cell.h \
+    griditem.h \
+    kenkenparser.h \
     mainwindow.h
 
 FORMS += \

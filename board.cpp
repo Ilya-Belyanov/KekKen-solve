@@ -5,16 +5,29 @@ Board::Board(QObject *parent, QGraphicsView *graph) :
     graphics(new QGraphicsView),
     scene(new QGraphicsScene)
 {
+    _grid = new GridItem();
+    scene->setBackgroundBrush(QColor("#1d1f21"));
+    scene->addItem(_grid);
+    _grid->setPos(0, 0);
     if(graph)
         setGraphicsView(graph);
+}
+
+Board::~Board()
+{
+    delete graphics;
+    delete scene;
 }
 
 void Board::setGraphicsView(QGraphicsView *graph)
 {
     graphics = graph;
     graphics->showFullScreen();
-    scene->setBackgroundBrush(Qt::black);
     graphics->setScene(scene);
-    scene->addItem(composeI);
     graphics->show();
+}
+
+void Board::setGrid(GridItem *g)
+{
+    _grid = g;
 }
