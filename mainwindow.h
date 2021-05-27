@@ -22,7 +22,7 @@ public:
 
 public slots:
     void failParse(QString message);
-    void setGrid(GridItem *g, QList<BorderRule> rule);
+    void setGrid(GridItem *g, QVector<BorderRule> rule);
 
 private:
     Ui::MainWindow *ui;

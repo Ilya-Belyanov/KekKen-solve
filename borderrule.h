@@ -7,19 +7,26 @@
 
 enum Operations
 {
-    PLUS, MINUS, MULTI, DEVIDE
+    PLUS, MINUS, MULTI, DEVIDE, FIXED
 };
 
 class BorderRule: public QObject
 {
     Q_OBJECT
+    QMap<Operations, QString> opMap;
 
 public:
     BorderRule(QObject *parent = 0);
+
+    BorderRule(const BorderRule& );
+    BorderRule& operator=(const BorderRule& );
+
     Operations op;
     int resultOp;
     QList<QPoint> points;
+
     QString getOperation();
+    void setOperation(QString operation);
     bool checkRules(GridItem *grid);
 };
 

@@ -2,21 +2,43 @@
 
 BorderRule::BorderRule(QObject *parent) : QObject(parent)
 {
+    opMap = {{PLUS, "+"}, {MINUS, "-"},
+             {MULTI, "*"}, {DEVIDE, ":"},
+             {FIXED, ""}};
+}
 
+BorderRule::BorderRule(const BorderRule &other)
+    :QObject(other.parent())
+{
+    op = other.op;
+    resultOp = other.resultOp;
+    points = other.points;
+}
+
+BorderRule& BorderRule::operator=(const BorderRule& other)
+{
+    op = other.op;
+    resultOp = other.resultOp;
+    points = other.points;
+    return *this;
 }
 
 QString BorderRule::getOperation()
 {
-    switch (op)
+    return QString::number(resultOp) + opMap[op];
+}
+
+void BorderRule::setOperation(QString operation)
+{
+    auto it = opMap.begin();
+    while(it != opMap.end())
     {
-        case(PLUS):
-            return QString::number(resultOp) + "+";
-        case(MINUS):
-            return QString::number(resultOp) + "-";
-        case(MULTI):
-            return QString::number(resultOp) + "*";
-        case(DEVIDE):
-            return QString::number(resultOp) + "/";
+        if(it.value() == operation)
+        {
+            op = it.key();
+            break;
+        }
+        it++;
     }
 }
 
@@ -38,6 +60,9 @@ bool BorderRule::checkRules(GridItem *grid)
         foreach(int i, items)
             result *= i;
     }
+    else if(op == FIXED)
+        result = resultOp;
+
     else
     {
         int max = *std::max_element(items.begin(), items.end());
@@ -47,6 +72,5 @@ bool BorderRule::checkRules(GridItem *grid)
         else
             result = max / min;
     }
-
     return result == resultOp;
 }

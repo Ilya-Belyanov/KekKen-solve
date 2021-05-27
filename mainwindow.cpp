@@ -51,7 +51,7 @@ void MainWindow::parseFile(QString fileName)
         return;
     }
     KenkenParser parser;
-    connect(&parser, SIGNAL(success(GridItem *, QList<BorderRule>)), this, SLOT(setGrid(GridItem *, QList<BorderRule>)));
+    connect(&parser, SIGNAL(success(GridItem *, QVector<BorderRule>)), this, SLOT(setGrid(GridItem *, QVector<BorderRule>)));
     connect(&parser, SIGNAL(fail(QString)), this, SLOT(failParse(QString)));
     parser.parse(pFile);
 }
@@ -61,9 +61,10 @@ void MainWindow::failParse(QString message)
     QMessageBox::information(this, tr("Проверка файла"), message);
 }
 
-void MainWindow::setGrid(GridItem *g, QList<BorderRule> rule)
+void MainWindow::setGrid(GridItem *g, QVector<BorderRule> rule)
 {
-
+    board->setGrid(g);
+    Q_UNUSED(rule);
 }
 
 void MainWindow::solve()

@@ -10,7 +10,7 @@
 class Board : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(GridItem *grid READ getRows WRITE setRows)
+    Q_PROPERTY(GridItem *grid WRITE setGrid)
 
 public:
     explicit Board(QObject *parent = nullptr, QGraphicsView *graph = nullptr );
