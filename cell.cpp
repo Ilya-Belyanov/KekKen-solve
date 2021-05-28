@@ -10,7 +10,7 @@ Cell::Cell(int width, int height, QGraphicsItem *parent)
     _defaultWidth = 10;
     _defaultHeight = 10;
     _lineWidth = 4;
-    _rectWidth = 1;
+    _rectWidth = 0.5;
     defaulSize();
     setWidth(width);
     setHeight(height);
@@ -52,19 +52,19 @@ void Cell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     Q_UNUSED(option)
     Q_UNUSED(widget)
 
-    QPen pen(Qt::green);
+    QPen pen(Qt::darkGray);
+    pen.setWidth(_rectWidth);
+    painter->setPen(pen);
+
+    paintRect(painter);
+
+    pen.setColor(Qt::green);
     pen.setWidth(_lineWidth);
     painter->setPen(pen);
 
     paintBorder(painter);
     paintText(painter);
     paintOp(painter);
-
-    pen.setColor(Qt::gray);
-    pen.setWidth(_rectWidth);
-    painter->setPen(pen);
-
-    paintRect(painter);
 }
 
 void Cell::paintRect(QPainter *painter)

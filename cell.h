@@ -24,7 +24,7 @@ class Cell: public QGraphicsItem
     int _fontSize;
     int _opFontSize;
     int _lineWidth;
-    int _rectWidth;
+    float _rectWidth;
 
     QString _operation;
     QString _text;

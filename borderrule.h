@@ -2,6 +2,7 @@
 #define BORDERRULE_H
 
 #include <QObject>
+#include <QDebug>
 
 #include "griditem.h"
 
@@ -20,6 +21,7 @@ public:
 
     BorderRule(const BorderRule& );
     BorderRule& operator=(const BorderRule& );
+    friend bool operator== (const BorderRule &c1, const BorderRule &c2);
 
     Operations op;
     int resultOp;

@@ -40,4 +40,47 @@ void KenkenParser::createGrids()
 {
     int size = sqrt(points);
     grid = new GridItem(size, size);
+    QVector<BorderRule> ruleWithoutFixed;
+    foreach(auto rule, rules)
+    {
+        foreach(QPoint point, rule.points)
+            setCellBorder(point, rule);
+        Cell *cell = grid->getCell(rule.points[0].y(), rule.points[0].x());
+        if(rule.op != FIXED)
+        {
+            cell->setOperation(rule.getOperation());
+            ruleWithoutFixed.append(rule);
+        }
+        else
+            cell->setText(QString::number(rule.resultOp));
+    }
+    rules = ruleWithoutFixed;
+}
+
+void KenkenParser::setCellBorder(QPoint point, BorderRule rule)
+{
+    int size = grid->getRows();
+    Cell *cell = grid->getCell(point.y(), point.x());
+    for(int dx = -1; dx <= 1; dx += 2)
+    {
+        if(point.x() + dx >= size || point.x() + dx < 0)
+            continue;
+        if(rule.points.contains(QPoint(point.x() + dx, point.y())))
+            continue;
+        if(dx == -1)
+            cell->setLeft(true);
+        else
+            cell->setRight(true);
+    }
+    for(int dy = -1; dy <= 1; dy += 2)
+    {
+        if(point.y() + dy >= size || point.y() + dy < 0)
+            continue;
+        if(rule.points.contains(QPoint(point.x(), point.y() + dy)))
+            continue;
+        if(dy == -1)
+            cell->setTop(true);
+        else
+            cell->setButtom(true);
+    }
 }

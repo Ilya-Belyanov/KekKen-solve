@@ -13,6 +13,7 @@ BorderRule::BorderRule(const BorderRule &other)
     op = other.op;
     resultOp = other.resultOp;
     points = other.points;
+    opMap = other.opMap;
 }
 
 BorderRule& BorderRule::operator=(const BorderRule& other)
@@ -20,7 +21,19 @@ BorderRule& BorderRule::operator=(const BorderRule& other)
     op = other.op;
     resultOp = other.resultOp;
     points = other.points;
+    opMap = other.opMap;
     return *this;
+}
+
+bool operator== (const BorderRule &c1, const BorderRule &c2)
+{
+    bool res = true;
+    res |= (c1.points.size() == c2.points.size());
+    foreach(QPoint p, c2.points)
+        res |= (c1.points.contains(p));
+    res |= (c1.op == c2.op);
+    res |= (c1.resultOp == c2.resultOp);
+    return res;
 }
 
 QString BorderRule::getOperation()
