@@ -10,10 +10,17 @@ Cell::Cell(int width, int height, QGraphicsItem *parent)
     _defaultWidth = 10;
     _defaultHeight = 10;
     _lineWidth = 4;
-    _rectWidth = 0.5;
-    defaulSize();
-    setWidth(width);
-    setHeight(height);
+    _rectWidth = 1;
+
+    if(width != 0)
+        setWidth(width);
+    else
+        setDefaulWidth();
+
+    if(height != 0)
+        setHeight(height);
+    else
+        setDefaulHeight();
 }
 
 Cell::~Cell()
@@ -23,9 +30,17 @@ Cell::~Cell()
 
 Cell::Cell(const Cell &other)
     :QGraphicsItem(other.parentItem()),
-      _width(other._width),
-     _height(other._height)
+     _defaultWidth(other._defaultWidth),
+     _defaultHeight(other._defaultHeight),
+     _lineWidth(other._lineWidth),
+     _rectWidth(other._rectWidth),
+     _isTop(false),
+     _isButtom(false),
+     _isRight(false),
+     _isLeft(false)
 {
+    setWidth(other._width);
+    setHeight(other._height);
 }
 
 Cell& Cell::operator=(const Cell& other)
@@ -118,9 +133,19 @@ void Cell::setHeight(int h)
     }
 }
 
-void Cell::defaulSize()
+void Cell::setDefaulSize()
+{
+    setDefaulWidth();
+    setDefaulHeight();
+}
+
+void Cell::setDefaulWidth()
 {
     _width = _defaultWidth;
+}
+
+void Cell::setDefaulHeight()
+{
     _height = _defaultHeight;
     updateFont();
 }
@@ -132,7 +157,8 @@ void Cell::setOperation(QString op)
 
 void Cell::setText(QString txt)
 {
-    _text = txt;
+    if(!_fixedText)
+        _text = txt;
 }
 
 void Cell::updateFont()

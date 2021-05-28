@@ -6,8 +6,8 @@
 #include <QPainter>
 #include "cell.h"
 
-typedef QVector<QVector<Cell*>> qmatrix;
-typedef QVector<Cell*> qrow;
+typedef QVector<QVector<Cell>> qmatrix;
+typedef QVector<Cell> qrow;
 
 class GridItem : public QGraphicsItem
 {
@@ -35,7 +35,7 @@ public:
 
     void createNewGrid();
     qmatrix *getGrid() {return &_grid;};
-    Cell *getCell(int row, int col) {return _grid[row][col];};
+    Cell *getCell(int row, int col) {return &_grid[row][col];};
 
 private:
     void compose();

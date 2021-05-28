@@ -14,9 +14,7 @@ GridItem::GridItem(int row, int cols, QGraphicsItem *parent)
 
 GridItem::~GridItem()
 {
-    foreach(qrow row, _grid)
-        foreach(Cell *cell, row)
-            delete cell;
+
 }
 
 QPainterPath GridItem::shape() const
@@ -60,7 +58,7 @@ void GridItem::createNewGrid()
         qrow row;
         for(int j = 0; j < _cols; j++)
         {
-            Cell *cell = new Cell(w, h, this);
+            Cell cell = Cell(w, h, this);
             row.push_back(cell);
         }
         _grid.append(row);
@@ -76,17 +74,17 @@ void GridItem::compose()
     int w = _defaultWidth / _cols;
     for(int i = 0; i < _rows; i++)
         for(int j = 0; j < _cols; j++)
-            _grid[i][j]->setPos(j*w, i*h);
+            _grid[i][j].setPos(j*w, i*h);
 }
 
 void GridItem::defaultFrame()
 {
     for(int j = 0; j < _cols; j++)
-        _grid[0][j]->setTop(true);
+        _grid[0][j].setTop(true);
     for(int j = 0; j < _cols; j++)
-        _grid[_rows - 1][j]->setButtom(true);
+        _grid[_rows - 1][j].setButtom(true);
     for(int i = 0; i < _rows; i++)
-        _grid[i][0]->setLeft(true);
+        _grid[i][0].setLeft(true);
     for(int i = 0; i < _rows; i++)
-        _grid[i][_cols - 1]->setRight(true);
+        _grid[i][_cols - 1].setRight(true);
 }

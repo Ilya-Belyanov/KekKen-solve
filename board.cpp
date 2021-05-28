@@ -21,6 +21,7 @@ Board::~Board()
 
 void Board::setGraphicsView(QGraphicsView *graph)
 {
+    delete graphics;
     graphics = graph;
     graphics->showFullScreen();
     graphics->setScene(scene);

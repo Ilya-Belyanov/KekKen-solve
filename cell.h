@@ -16,6 +16,7 @@ class Cell: public QGraphicsItem
     Q_PROPERTY(bool buttom READ isButtom WRITE setButtom)
     Q_PROPERTY(bool right READ isRight WRITE setRight)
     Q_PROPERTY(bool left READ isLeft WRITE setLeft)
+    Q_PROPERTY(bool fixedText READ isfixedText WRITE setfixedText)
 
     int _width;
     int _height;
@@ -30,6 +31,7 @@ class Cell: public QGraphicsItem
     QString _text;
 
     bool _isTop, _isButtom, _isRight, _isLeft;
+    bool _fixedText = false;
 
 public:
     explicit Cell(int width = 0, int height = 0, QGraphicsItem *parent = 0);
@@ -50,7 +52,9 @@ public:
     int getHeight() {return _height;}
     void setWidth(int w);
     void setHeight(int h);
-    void defaulSize();
+    void setDefaulSize();
+    void setDefaulWidth();
+    void setDefaulHeight();
 
     QString getOperation() {return _operation;}
     QString getText() {return _text;}
@@ -66,6 +70,9 @@ public:
     void setButtom(bool b) {_isButtom = b;};
     void setRight(bool r)  {_isRight = r;};
     void setLeft(bool l)   {_isLeft = l;};
+
+    bool isFixedText()   {return _fixedText;}
+    void setFixedText(bool fixedText)   {_fixedText = fixedText;};
 
 private:
     void updateFont();

@@ -26,7 +26,7 @@ void KenkenParser::parse(QFile &file)
                                    coordSearch.cap(2).toInt() - 1);
              pos += coordSearch.matchedLength();
              points++;
-         }
+        }
         opSearch.indexIn(line);
         rule.setOperation(opSearch.cap(2));
         rule.resultOp = opSearch.cap(1).toInt();
@@ -43,8 +43,6 @@ void KenkenParser::createGrids()
     QVector<BorderRule> ruleWithoutFixed;
     foreach(auto rule, rules)
     {
-        foreach(QPoint point, rule.points)
-            setCellBorder(point, rule);
         Cell *cell = grid->getCell(rule.points[0].y(), rule.points[0].x());
         if(rule.op != FIXED)
         {
@@ -52,7 +50,13 @@ void KenkenParser::createGrids()
             ruleWithoutFixed.append(rule);
         }
         else
+        {
             cell->setText(QString::number(rule.resultOp));
+            cell->setFixedText(true);
+        }
+
+        foreach(QPoint point, rule.points)
+            setCellBorder(point, rule);
     }
     rules = ruleWithoutFixed;
 }
