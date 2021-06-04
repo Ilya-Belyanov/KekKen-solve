@@ -21,7 +21,8 @@ Board::~Board()
 
 void Board::setGraphicsView(QGraphicsView *graph)
 {
-    delete graphics;
+    if(graphics)
+        delete graphics;
     graphics = graph;
     graphics->showFullScreen();
     graphics->setScene(scene);
@@ -30,7 +31,8 @@ void Board::setGraphicsView(QGraphicsView *graph)
 
 void Board::setGrid(GridItem *g)
 {
-    delete _grid;
+    if(_grid)
+        delete _grid;
     _grid = g;
     scene->addItem(_grid);
     _grid->setPos(0, 0);

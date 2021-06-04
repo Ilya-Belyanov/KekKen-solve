@@ -10,12 +10,16 @@
 class Board : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(GridItem *grid READ getGrid WRITE setGrid)
 
 public:
     explicit Board(QObject *parent = nullptr, QGraphicsView *graph = nullptr );
     ~Board();
     void setGraphicsView(QGraphicsView *graph);
     void setGrid(GridItem *g);
+    GridItem *getGrid(){return _grid;};
+    void update() {scene->update();
+                  graphics->update();};
 
 private:
     QGraphicsView *graphics;

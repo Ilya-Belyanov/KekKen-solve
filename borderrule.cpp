@@ -59,7 +59,7 @@ bool BorderRule::checkRules(GridItem *grid)
 {
     QList<int> items;
     foreach(QPoint p, points)
-        items.append(grid->getCell(p.x(), p.y())->getNumber());
+        items.append(grid->getCell(p.y(), p.x())->getNumber());
     int result;
     if(op == PLUS)
     {

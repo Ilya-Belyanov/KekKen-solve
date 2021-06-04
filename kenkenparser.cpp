@@ -44,11 +44,9 @@ void KenkenParser::createGrids()
     foreach(auto rule, rules)
     {
         Cell *cell = grid->getCell(rule.points[0].y(), rule.points[0].x());
+        cell->setOperation(rule.getOperation());
         if(rule.op != FIXED)
-        {
-            cell->setOperation(rule.getOperation());
             ruleWithoutFixed.append(rule);
-        }
         else
         {
             cell->setText(QString::number(rule.resultOp));

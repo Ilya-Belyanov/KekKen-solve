@@ -48,6 +48,15 @@ void GridItem::setCols(int c)
         _cols = c;
 }
 
+QMap<int, int> GridItem::fixedCells(int row)
+{
+    QMap<int, int> fixed;
+    for(int i = 0; i < _cols; i++)
+        if(_grid[row][i].isFixedText())
+            fixed[i] = _grid[row][i].getText().toInt();
+    return fixed;
+}
+
 void GridItem::createNewGrid()
 {
     _grid.clear();

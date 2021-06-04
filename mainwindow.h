@@ -1,12 +1,16 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <ctime>
+
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QProgressDialog>
 
 #include "board.h"
 #include "kenkenparser.h"
+#include "kenkensolver.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,11 +26,13 @@ public:
 
 public slots:
     void failParse(QString message);
-    void setGrid(GridItem *g, QVector<BorderRule> rule);
+    void successParse(GridItem *g, QVector<BorderRule> rule);
+    void resultSolve(QString message);
 
 private:
     Ui::MainWindow *ui;
     Board *board;
+    QVector<BorderRule> rules;
 
     void loadStyle();
 

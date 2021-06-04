@@ -51,7 +51,7 @@ void MainWindow::parseFile(QString fileName)
         return;
     }
     KenkenParser parser;
-    connect(&parser, SIGNAL(success(GridItem *, QVector<BorderRule>)), this, SLOT(setGrid(GridItem *, QVector<BorderRule>)));
+    connect(&parser, SIGNAL(success(GridItem *, QVector<BorderRule>)), this, SLOT(successParse(GridItem *, QVector<BorderRule>)));
     connect(&parser, SIGNAL(fail(QString)), this, SLOT(failParse(QString)));
     parser.parse(pFile);
 }
@@ -61,13 +61,31 @@ void MainWindow::failParse(QString message)
     QMessageBox::information(this, tr("Проверка файла"), message);
 }
 
-void MainWindow::setGrid(GridItem *g, QVector<BorderRule> rule)
+void MainWindow::successParse(GridItem *g, QVector<BorderRule> rule)
 {
     board->setGrid(g);
-    Q_UNUSED(rule);
+    rules = rule;
 }
 
 void MainWindow::solve()
 {
+    if(rules.size() == 0)
+    {
+        QMessageBox::information(this, tr("Решение Kenken"), tr("Загрузите карту!"));
+        return;
+    }
 
+    KenkenSolver solver;
+    connect(&solver, SIGNAL(result(QString)), this, SLOT(resultSolve(QString)));
+
+    int start = clock();
+
+    solver.solve(board->getGrid(), rules);
+    board->update();
+    qDebug() << clock() - start;
+}
+
+void MainWindow::resultSolve(QString message)
+{
+    QMessageBox::information(this, tr("Решение Kenken"), message);
 }

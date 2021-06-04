@@ -33,6 +33,8 @@ public:
     void setRows(int r);
     void setCols(int c);
 
+    QMap<int, int> fixedCells(int row);
+
     void createNewGrid();
     qmatrix *getGrid() {return &_grid;};
     Cell *getCell(int row, int col) {return &_grid[row][col];};

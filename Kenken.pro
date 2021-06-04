@@ -14,6 +14,7 @@ SOURCES += \
     cell.cpp \
     griditem.cpp \
     kenkenparser.cpp \
+    kenkensolver.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -23,6 +24,7 @@ HEADERS += \
     cell.h \
     griditem.h \
     kenkenparser.h \
+    kenkensolver.h \
     mainwindow.h
 
 FORMS += \
