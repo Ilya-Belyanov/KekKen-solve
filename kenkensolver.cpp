@@ -139,13 +139,13 @@ void KenkenSolver::setGrid(GridItem *g)
 {
     for(int i = 0; i < curPos.size(); i++)
         for(int j = 0; j < curPos.size(); j++)
-            g->getCell(i, j)->setText(QString::number(combinations[indexs[i][curPos[i]]][j]));
+            g->getCell(i, j)->setText(combinations[indexs[i][curPos[i]]][j]);
 }
 
 void KenkenSolver::setGrid(GridItem *g, int row)
 {
     for(int j = 0; j < curPos.size(); j++)
-        g->getCell(row, j)->setText(QString::number(combinations[indexs[row][curPos[row]]][j]));
+        g->getCell(row, j)->setText(combinations[indexs[row][curPos[row]]][j]);
 }
 
 bool KenkenSolver::allEnd()
@@ -178,6 +178,7 @@ void KenkenSolver::upPos(GridItem *g, int pos)
     if (curPos[pos] >= indexs[pos].size())
     {
        curPos[pos] = 0;
+       setGrid(g, pos);
        isEnd[pos]  = true;
        upPos(g, ++pos);
     }

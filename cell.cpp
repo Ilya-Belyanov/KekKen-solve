@@ -11,7 +11,7 @@ Cell::Cell(int width, int height, QGraphicsItem *parent)
     _defaultHeight = 10;
     _lineWidth = 4;
     _rectWidth = 1;
-
+    _text = 0;
     if(width != 0)
         setWidth(width);
     else
@@ -34,6 +34,7 @@ Cell::Cell(const Cell &other)
      _defaultHeight(other._defaultHeight),
      _lineWidth(other._lineWidth),
      _rectWidth(other._rectWidth),
+     _text(other._text),
      _isTop(false),
      _isButtom(false),
      _isRight(false),
@@ -47,6 +48,7 @@ Cell& Cell::operator=(const Cell& other)
 {
     _width = other._width;
     _height = other._height;
+    _text = other._text;
     return *this;
 }
 
@@ -102,11 +104,13 @@ void Cell::paintBorder(QPainter *painter)
 
 void Cell::paintText(QPainter *painter)
 {
+    if (_text == 0)
+        return;
     QRect rect(0, 0, _width, _height);
     QFont font = painter->font();
     font.setPixelSize(_fontSize);
     painter->setFont(font);
-    painter->drawText(rect, Qt::AlignCenter, _text);
+    painter->drawText(rect, Qt::AlignCenter, getText());
 }
 
 void Cell::paintOp(QPainter *painter)
@@ -155,7 +159,7 @@ void Cell::setOperation(QString op)
     _operation = op;
 }
 
-void Cell::setText(QString txt)
+void Cell::setText(int txt)
 {
     if(!_fixedText)
         _text = txt;

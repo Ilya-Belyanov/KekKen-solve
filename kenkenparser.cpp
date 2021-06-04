@@ -49,7 +49,7 @@ void KenkenParser::createGrids()
             ruleWithoutFixed.append(rule);
         else
         {
-            cell->setText(QString::number(rule.resultOp));
+            cell->setText(rule.resultOp);
             cell->setFixedText(true);
         }
 

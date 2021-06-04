@@ -11,7 +11,7 @@ class Cell: public QGraphicsItem
     Q_PROPERTY(int width READ getWidth WRITE setWidth)
     Q_PROPERTY(int height READ getHeight WRITE setHeight)
     Q_PROPERTY(QString operation READ getOperation WRITE setOperation)
-    Q_PROPERTY(QString text READ getText WRITE setText)
+    Q_PROPERTY(int text READ getText WRITE setText)
     Q_PROPERTY(bool top READ isTop WRITE setTop)
     Q_PROPERTY(bool buttom READ isButtom WRITE setButtom)
     Q_PROPERTY(bool right READ isRight WRITE setRight)
@@ -28,7 +28,7 @@ class Cell: public QGraphicsItem
     float _rectWidth;
 
     QString _operation;
-    QString _text;
+    int _text;
 
     bool _isTop, _isButtom, _isRight, _isLeft;
     bool _fixedText = false;
@@ -57,10 +57,10 @@ public:
     void setDefaulHeight();
 
     QString getOperation() {return _operation;}
-    QString getText() {return _text;}
-    int getNumber() {return _text.toInt();}
+    QString getText() {return QString::number(_text);}
+    int getNumber() {return _text;}
     void setOperation(QString op);
-    void setText(QString txt);
+    void setText(int txt);
 
     bool isTop()    {return _isTop;}
     bool isButtom() {return _isButtom;}
