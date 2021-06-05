@@ -30,6 +30,10 @@ public:
     QString getOperation();
     void setOperation(QString operation);
     bool checkRules(GridItem *grid);
+    bool checkRules(QVector<QVector<short>> grid);
+
+private:
+    bool _checkRules(QList<int> items);
 };
 
 #endif // BORDERRULE_H

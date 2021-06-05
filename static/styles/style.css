@@ -27,7 +27,7 @@ QLabel, QCheckBox {
 }
 
 
-QProgressBar
+QProgressDialog
 {
     border: 1px solid gray;
     border-radius: 3px;
@@ -35,11 +35,10 @@ QProgressBar
     padding: 1px;
     color: white;
     font: bold 14px;
-    qproperty-alignment:AlignCenter;
 }
 
-QProgressBar::chunk:horizontal {
-    background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 rgb(126,7,169), stop: 1 rgb(255,214,1));
+QProgressDialog::chunk:horizontal {
+    background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 #1d1f21, stop: 1 rgb(0,255,0));
 }
 QMessageBox{
     background:#1d1f21;

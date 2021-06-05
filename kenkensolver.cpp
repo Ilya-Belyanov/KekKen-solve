@@ -7,12 +7,14 @@ KenkenSolver::KenkenSolver(QObject *parent) : QObject(parent)
 
 void KenkenSolver::solve(GridItem *g, QVector<BorderRule> rule)
 {
-    Q_UNUSED(rule);
+    _rules = rule;
+    timeStartSolve = clock();
     generateCombinations(g->getRows());
     generateIndexs(g, g->getRows());
     createEndFalse(g->getRows());
     createStartPos(g->getRows());
-    startSolve(g, rule);
+    createGrid(g);
+    startSolve(g);
 }
 
 void KenkenSolver::generateCombinations(int size)
@@ -55,6 +57,17 @@ void KenkenSolver::createStartPos(int size)
     curPos.clear();
     for(int i = 0; i < size; i++)
         curPos.append(0);
+}
+
+void KenkenSolver::createGrid(GridItem *g)
+{
+    for(int i = 0; i < g->getRows(); i++)
+    {
+        QVector<short> row;
+        for(int j = 0; j < g->getCols(); j++)
+            row.append(g->getCell(i, j)->getNumber());
+        _grid.append(row);
+    }
 }
 
 QVector<short> KenkenSolver::generateIndexsForFixed(QMap<int, int> fixed, int size)
@@ -110,42 +123,47 @@ int KenkenSolver::factor(int n)
     return factor(n - 1) * n;
 }
 
-void KenkenSolver::startSolve(GridItem *g, QVector<BorderRule> rule)
+void KenkenSolver::startSolve(GridItem *g)
 {
-    setGrid(g);
+    setGrid();
     while(!allEnd())
     {
         if(!checkCols())
         {
-            upPos(g);
+            upPos();
             continue;;
         }
         bool res = true;
-        foreach(BorderRule r, rule)
+        foreach(BorderRule r, _rules)
         {
-            if(!r.checkRules(g))
+            if(!r.checkRules(_grid))
             {
                 res = false;
-                upPos(g);
+                upPos();
                 break;
             }
         }
         if(res)
-            break;
+        {
+            setSolveGrid(g);
+            emit result("Success solve! Time: " + QString::number(clock() - timeStartSolve) + " ms");
+            return;
+        }
     }
+    emit result("Fail solve! Time: " + QString::number(clock() - timeStartSolve) + " ms");
 }
 
-void KenkenSolver::setGrid(GridItem *g)
+void KenkenSolver::setGrid()
 {
     for(int i = 0; i < curPos.size(); i++)
         for(int j = 0; j < curPos.size(); j++)
-            g->getCell(i, j)->setText(combinations[indexs[i][curPos[i]]][j]);
+            _grid[i][j] = combinations[indexs[i][curPos[i]]][j];
 }
 
-void KenkenSolver::setGrid(GridItem *g, int row)
+void KenkenSolver::setGrid(int row)
 {
     for(int j = 0; j < curPos.size(); j++)
-        g->getCell(row, j)->setText(combinations[indexs[row][curPos[row]]][j]);
+        _grid[row][j] = combinations[indexs[row][curPos[row]]][j];
 }
 
 bool KenkenSolver::allEnd()
@@ -170,7 +188,7 @@ bool KenkenSolver::checkCols()
     return true;
 }
 
-void KenkenSolver::upPos(GridItem *g, int pos)
+void KenkenSolver::upPos(int pos)
 {
     if(pos >= curPos.size())
         return;
@@ -178,10 +196,17 @@ void KenkenSolver::upPos(GridItem *g, int pos)
     if (curPos[pos] >= indexs[pos].size())
     {
        curPos[pos] = 0;
-       setGrid(g, pos);
+       setGrid(pos);
        isEnd[pos]  = true;
-       upPos(g, ++pos);
+       upPos(++pos);
     }
     else
-        setGrid(g, pos);
+        setGrid(pos);
+}
+
+void KenkenSolver::setSolveGrid(GridItem *g)
+{
+    for(int i = 0; i < curPos.size(); i++)
+        for(int j = 0; j < curPos.size(); j++)
+            g->getCell(i, j)->setText(_grid[i][j]);
 }

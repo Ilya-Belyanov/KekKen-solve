@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <ctime>
 
 #include <QMainWindow>
 #include <QFileDialog>
@@ -27,6 +26,7 @@ public:
 public slots:
     void failParse(QString message);
     void successParse(GridItem *g, QVector<BorderRule> rule);
+
     void resultSolve(QString message);
 
 private:

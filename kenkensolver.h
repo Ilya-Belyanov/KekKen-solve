@@ -1,6 +1,8 @@
 #ifndef KENKENSOLVER_H
 #define KENKENSOLVER_H
 
+#include <ctime>
+
 #include <QObject>
 
 #include "griditem.h"
@@ -15,6 +17,11 @@ class KenkenSolver : public QObject
     QVector<bool> isEnd;
     QVector<int> curPos;
 
+    QVector<QVector<short>> _grid;
+    QVector<BorderRule> _rules;
+
+    int timeStartSolve;
+
 public:
     explicit KenkenSolver(QObject *parent = nullptr);
     void solve(GridItem *g, QVector<BorderRule> rule);
@@ -24,17 +31,20 @@ private:
     void generateIndexs(GridItem *g, int size);
     void createEndFalse(int size);
     void createStartPos(int size);
+    void createGrid(GridItem *g);
     QVector<short> generateIndexsForFixed(QMap<int, int> fixed, int size);
     bool nextCombination(QVector<short> &combination);
     void swap(QVector<short> &combination, int i, int j);
     int factor(int n);
 
-    void startSolve(GridItem *g, QVector<BorderRule> rule);
-    void setGrid(GridItem *g);
-    void setGrid(GridItem *g, int row);
+    void startSolve(GridItem *g);
+    void setGrid();
+    void setGrid(int row);
     bool allEnd();
     bool checkCols();
-    void upPos(GridItem *g, int pos = 0);
+    void upPos(int pos = 0);
+
+    void setSolveGrid(GridItem *g);
 
 signals:
     void result(QString message);

@@ -46,7 +46,7 @@ void MainWindow::parseFile(QString fileName)
     QFile pFile(fileName);
     if (!pFile.open(QIODevice::ReadOnly))
     {
-        QMessageBox::information(this, tr("Невозможно открыть файл"),
+        QMessageBox::information(this, tr("Don't open file"),
             pFile.errorString());
         return;
     }
@@ -58,7 +58,7 @@ void MainWindow::parseFile(QString fileName)
 
 void MainWindow::failParse(QString message)
 {
-    QMessageBox::information(this, tr("Проверка файла"), message);
+    QMessageBox::information(this, tr("Check file"), message);
 }
 
 void MainWindow::successParse(GridItem *g, QVector<BorderRule> rule)
@@ -71,21 +71,28 @@ void MainWindow::solve()
 {
     if(rules.size() == 0)
     {
-        QMessageBox::information(this, tr("Решение Kenken"), tr("Загрузите карту!"));
+        QMessageBox::information(this, tr("Solve Kenken"), tr("Load map!"));
         return;
     }
 
     KenkenSolver solver;
     connect(&solver, SIGNAL(result(QString)), this, SLOT(resultSolve(QString)));
 
-    int start = clock();
+    QProgressDialog *pr = new QProgressDialog(this,Qt::FramelessWindowHint);
+    pr->setLabelText( tr("Kenken solve...") );
+    pr->setMaximum(0);
+    pr->setMinimum(0);
+    pr->setCancelButton( nullptr );
+    pr->show();
+    qApp->processEvents();
 
     solver.solve(board->getGrid(), rules);
     board->update();
-    qDebug() << clock() - start;
+    pr->close();
+    delete pr;
 }
 
 void MainWindow::resultSolve(QString message)
 {
-    QMessageBox::information(this, tr("Решение Kenken"), message);
+    QMessageBox::information(this, tr("Solve Kenken"), message);
 }

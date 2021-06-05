@@ -60,6 +60,19 @@ bool BorderRule::checkRules(GridItem *grid)
     QList<int> items;
     foreach(QPoint p, points)
         items.append(grid->getCell(p.y(), p.x())->getNumber());
+    return _checkRules(items);
+}
+
+bool BorderRule::checkRules(QVector<QVector<short>> grid)
+{
+    QList<int> items;
+    foreach(QPoint p, points)
+        items.append(grid[p.y()][p.x()]);
+    return _checkRules(items);
+}
+
+bool BorderRule::_checkRules(QList<int> items)
+{
     int result;
     if(op == PLUS)
     {
