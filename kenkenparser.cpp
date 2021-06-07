@@ -19,17 +19,25 @@ void KenkenParser::parse(QFile &file)
     {
         BorderRule rule;
         line = in.readLine();
+        if(line.isEmpty())
+            break;
         int pos = 0;
+        bool res = true;
         while ((pos = coordSearch.indexIn(line, pos)) != -1)
         {
-             rule.points << QPoint(coordSearch.cap(1).toInt() - 1,
-                                   coordSearch.cap(2).toInt() - 1);
+             rule.points << QPoint(coordSearch.cap(1).toInt(&res) - 1,
+                                   coordSearch.cap(2).toInt(&res) - 1);
              pos += coordSearch.matchedLength();
              points++;
         }
         opSearch.indexIn(line);
         rule.setOperation(opSearch.cap(2));
-        rule.resultOp = opSearch.cap(1).toInt();
+        rule.resultOp = opSearch.cap(1).toInt(&res);
+        if((rule.points.size() == 1 && rule.op != FIXED) || !res || rule.points.size() == 0)
+        {
+            emit fail("Error on line: " + line);
+            return;
+        }
         rules.push_back(rule);
     }
     createGrids();

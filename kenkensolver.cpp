@@ -11,7 +11,6 @@ void KenkenSolver::solve(GridItem *g, QVector<BorderRule> rule)
     timeStartSolve = clock();
     generateCombinations(g->getRows());
     generateIndexs(g, g->getRows());
-    createEndFalse(g->getRows());
     createStartPos(g->getRows());
     createGrid(g);
     startSolve(g);
@@ -43,13 +42,6 @@ void KenkenSolver::generateIndexs(GridItem *g, int size)
             rowIndex = generateIndexsForFixed(fixed, max);
         indexs.append(rowIndex);
     }
-}
-
-void KenkenSolver::createEndFalse(int size)
-{
-    isEnd.clear();
-    for(int i = 0; i < size; i++)
-        isEnd.append(false);
 }
 
 void KenkenSolver::createStartPos(int size)
@@ -168,8 +160,8 @@ void KenkenSolver::setGrid(int row)
 
 bool KenkenSolver::allEnd()
 {
-    foreach(bool end, isEnd)
-        if(!end)
+    for(int i = 0; i < curPos.size(); i++)
+        if(curPos[i] != indexs[i].last())
             return false;
     return true;
 }
@@ -197,7 +189,6 @@ void KenkenSolver::upPos(int pos)
     {
        curPos[pos] = 0;
        setGrid(pos);
-       isEnd[pos]  = true;
        upPos(++pos);
     }
     else

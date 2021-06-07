@@ -14,7 +14,6 @@ class KenkenSolver : public QObject
 
     QVector<QVector<short>> combinations;
     QVector<QVector<short>> indexs;
-    QVector<bool> isEnd;
     QVector<int> curPos;
 
     QVector<QVector<short>> _grid;
@@ -29,7 +28,6 @@ public:
 private:
     void generateCombinations(int size);
     void generateIndexs(GridItem *g, int size);
-    void createEndFalse(int size);
     void createStartPos(int size);
     void createGrid(GridItem *g);
     QVector<short> generateIndexsForFixed(QMap<int, int> fixed, int size);
