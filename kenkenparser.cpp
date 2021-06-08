@@ -67,7 +67,7 @@ void KenkenParser::createGrids()
     rules = ruleWithoutFixed;
 }
 
-void KenkenParser::setCellBorder(QPoint point, BorderRule rule)
+void KenkenParser::setCellBorder(const QPoint &point, const BorderRule &rule)
 {
     int size = grid->getRows();
     Cell *cell = grid->getCell(point.y(), point.x());

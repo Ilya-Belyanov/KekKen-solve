@@ -30,7 +30,7 @@ private:
     void generateIndexs(GridItem *g, int size);
     void createStartPos(int size);
     void createGrid(GridItem *g);
-    QVector<short> generateIndexsForFixed(QMap<int, int> fixed, int size);
+    QVector<short> generateIndexsForFixed(const QMap<int, int> &fixed, int size);
     bool nextCombination(QVector<short> &combination);
     void swap(QVector<short> &combination, int i, int j);
     int factor(int n);

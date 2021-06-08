@@ -26,7 +26,7 @@ public:
 
     void parse(QFile &file);
     void createGrids();
-    void setCellBorder(QPoint point, BorderRule rule);
+    void setCellBorder(const QPoint &point, const BorderRule &rule);
 
 private:
     QRegExp coordSearch;

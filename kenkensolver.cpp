@@ -62,7 +62,7 @@ void KenkenSolver::createGrid(GridItem *g)
     }
 }
 
-QVector<short> KenkenSolver::generateIndexsForFixed(QMap<int, int> fixed, int size)
+QVector<short> KenkenSolver::generateIndexsForFixed(const QMap<int, int>  &fixed, int size)
 {
     QVector<short> rowIndex;
     for(int j = 0; j < size; j++)

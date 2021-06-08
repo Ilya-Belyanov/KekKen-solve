@@ -28,7 +28,7 @@ public:
     QList<QPoint> points;
 
     QString getOperation();
-    void setOperation(QString operation);
+    void setOperation(const QString operation);
     bool checkRules(GridItem *grid);
     bool checkRules(QVector<QVector<short>> grid);
 

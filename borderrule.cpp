@@ -41,7 +41,7 @@ QString BorderRule::getOperation()
     return QString::number(resultOp) + opMap[op];
 }
 
-void BorderRule::setOperation(QString operation)
+void BorderRule::setOperation(const QString operation)
 {
     auto it = opMap.begin();
     while(it != opMap.end())

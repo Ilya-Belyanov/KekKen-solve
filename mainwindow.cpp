@@ -41,7 +41,7 @@ void MainWindow::load()
         parseFile(fileName);
 }
 
-void MainWindow::parseFile(QString fileName)
+void MainWindow::parseFile(const QString fileName)
 {
     QFile pFile(fileName);
     if (!pFile.open(QIODevice::ReadOnly))
@@ -73,12 +73,8 @@ void MainWindow::solve()
     {
         QMessageBox::information(this, tr("Solve Kenken"), tr("Load map!"));
         return;
-    }
-
-    KenkenSolver solver;
-    connect(&solver, SIGNAL(result(QString)), this, SLOT(resultSolve(QString)));
-
-    QProgressDialog *pr = new QProgressDialog(this,Qt::FramelessWindowHint);
+    } 
+    QProgressDialog *pr = new QProgressDialog(this, Qt::FramelessWindowHint);
     pr->setLabelText( tr("Kenken solve...") );
     pr->setMaximum(0);
     pr->setMinimum(0);
@@ -86,6 +82,8 @@ void MainWindow::solve()
     pr->show();
     qApp->processEvents();
 
+    KenkenSolver solver;
+    connect(&solver, SIGNAL(result(QString)), this, SLOT(resultSolve(QString)));
     solver.solve(board->getGrid(), rules);
     board->update();
     pr->close();

@@ -50,8 +50,8 @@ public:
 
     int getWidth() {return _width;}
     int getHeight() {return _height;}
-    void setWidth(int w);
-    void setHeight(int h);
+    void setWidth(const int w);
+    void setHeight(const int h);
     void setDefaulSize();
     void setDefaulWidth();
     void setDefaulHeight();
@@ -59,20 +59,20 @@ public:
     QString getOperation() {return _operation;}
     QString getText() {return QString::number(_text);}
     int getNumber() {return _text;}
-    void setOperation(QString op);
-    void setText(int txt);
+    void setOperation(const QString op);
+    void setText(const int txt);
 
     bool isTop()    {return _isTop;}
     bool isButtom() {return _isButtom;}
     bool isRight()  {return _isRight;}
     bool isLeft()   {return _isLeft;}
-    void setTop(bool t)    {_isTop = t;};
-    void setButtom(bool b) {_isButtom = b;};
-    void setRight(bool r)  {_isRight = r;};
-    void setLeft(bool l)   {_isLeft = l;};
+    void setTop(const bool t)    {_isTop = t;};
+    void setButtom(const bool b) {_isButtom = b;};
+    void setRight(const bool r)  {_isRight = r;};
+    void setLeft(const bool l)   {_isLeft = l;};
 
     bool isFixedText()   {return _fixedText;}
-    void setFixedText(bool fixedText)   {_fixedText = fixedText;};
+    void setFixedText(const bool fixedText)   {_fixedText = fixedText;};
 
 private:
     void updateFont();

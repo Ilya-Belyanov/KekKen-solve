@@ -122,13 +122,13 @@ void Cell::paintOp(QPainter *painter)
     painter->drawText(rect, Qt::AlignTop | Qt::AlignLeft, _operation);
 }
 
-void Cell::setWidth(int w)
+void Cell::setWidth(const int w)
 {
     if(w > 0)
         _width = w;
 }
 
-void Cell::setHeight(int h)
+void Cell::setHeight(const int h)
 {
     if(h > 0)
     {
@@ -154,12 +154,12 @@ void Cell::setDefaulHeight()
     updateFont();
 }
 
-void Cell::setOperation(QString op)
+void Cell::setOperation(const QString op)
 {
     _operation = op;
 }
 
-void Cell::setText(int txt)
+void Cell::setText(const int txt)
 {
     if(!_fixedText)
         _text = txt;

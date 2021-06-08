@@ -38,7 +38,7 @@ private:
 
 private slots:
     void load();
-    void parseFile(QString fileName);
+    void parseFile(const QString fileName);
     void solve();
 };
 #endif // MAINWINDOW_H
